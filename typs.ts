@@ -18,10 +18,12 @@ export interface StoreApiResponse {
 }
 
 export interface ProductsDetails {
+  image?: string;
+  price?: number;
   id: number;
   title?: string;
-  description: string;
-  thumbailUrl: string;
-  thumbailAlt: string;
-  rating: number;
+  description?: string;
+  thumbailUrl?: string;
+  thumbailAlt?: string;
+  rating?: number;
 }

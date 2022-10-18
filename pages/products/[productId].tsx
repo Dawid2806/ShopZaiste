@@ -17,6 +17,7 @@ const ProductIdPage = ({
       <ProductDetails
         data={{
           id: data.id,
+          price: data.price,
           title: data.title,
           thumbailUrl: data.image,
           thumbailAlt: data.title,

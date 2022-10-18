@@ -1,26 +1,51 @@
-import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
+import { useQuery } from "react-query";
 import { ProductDetails } from "../../components/Products/Product";
-import { InferGetStaticPaths, StoreApiResponse } from "../../typs";
+import { StoreApiResponse } from "../../typs";
 
-const ProductIdPage = ({
-  data,
-}: InferGetServerSidePropsType<typeof getStaticProps>) => {
+const getProducts = async (id: string) => {
+  if (id === undefined) return;
+  const res = await fetch(
+    `https://naszsklep-api.vercel.app/api/products/${id}`
+  );
+
+  const data: StoreApiResponse = await res.json();
+  return data;
+};
+
+const ProductIdPage = () => {
   const router = useRouter();
-  console.log(router.pathname);
-  if (!data) {
+  const productId = router.query.productsId;
+  const currentProductId = String(productId);
+  const { data, isLoading, isError } = useQuery(
+    "products-csr",
+    () => {
+      return getProducts(currentProductId);
+    },
+    {
+      cacheTime: 2000,
+    }
+  );
+  if (!currentProductId === undefined || Array.isArray(currentProductId)) {
+    return <div>Niema takiego produktu</div>;
+  }
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!data || isError) {
     return <div>cos poszło nie tak</div>;
   }
   return (
     <>
-      <Link href={"/products-csr"}>
+      <Link href={"/products-csr?page=1"}>
         <a>wroc na strone z produktami</a>
       </Link>
       <ProductDetails
         data={{
           id: data.id,
+          price: data.price,
           title: data.title,
           thumbailUrl: data.image,
           thumbailAlt: data.title,
@@ -32,38 +57,3 @@ const ProductIdPage = ({
   );
 };
 export default ProductIdPage;
-
-export const getStaticPaths = async () => {
-  const res = await fetch("https://naszsklep-api.vercel.app/api/products/");
-  const data: StoreApiResponse[] = await res.json();
-  console.log(data);
-  return {
-    paths: data.map((product) => {
-      return {
-        params: {
-          productId: product.id.toString(),
-        },
-      };
-    }),
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async ({
-  params,
-}: InferGetStaticPaths<typeof getStaticPaths>) => {
-  if (!params?.productId) {
-    return {
-      props: {},
-    };
-  }
-  const res = await fetch(
-    `https://naszsklep-api.vercel.app/api/products/${params?.productId}`
-  );
-  const data: StoreApiResponse = await res.json();
-  return {
-    props: {
-      data,
-    },
-  };
-};
