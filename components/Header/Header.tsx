@@ -24,7 +24,9 @@ export const Header = () => {
           </Link>
           <Link href={"/products-csr?page=1"}>
             <li
-              className={router.pathname === "/products-csr" ? "selected" : ""}
+              className={
+                router.pathname === "/products-csr?page={1}" ? "selected" : ""
+              }
             >
               Products-csr
             </li>
