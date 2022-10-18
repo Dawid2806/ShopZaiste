@@ -12,13 +12,7 @@ const DATA = {
 };
 
 const Home = () => {
-  return (
-    <div className="flex flex-col bg-teal-100 h-screen ">
-      <Main>
-        <ProductDetails data={DATA} />
-      </Main>
-    </div>
-  );
+  return <div className="flex flex-col bg-teal-100 h-screen "></div>;
 };
 
 export default Home;
