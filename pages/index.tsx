@@ -1,7 +1,5 @@
-import { Footer } from "../components/Footer";
-import { Header } from "../components/Header";
-import { Main } from "../components/Main";
-import { ProductDetails } from "../components/Product";
+import { Main } from "../components/Main/Main";
+import { ProductDetails } from "../components/Products/Product";
 
 const DATA = {
   id: 1,

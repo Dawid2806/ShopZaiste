@@ -1,17 +1,11 @@
-import {
-  GetStaticPathsResult,
-  GetStaticPropsContext,
-  InferGetServerSidePropsType,
-} from "next";
+import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { ProductDetails } from "../../components/Product";
-import { InferGetStaticPaths } from "../../typs";
+import { ProductDetails } from "../../components/Products/Product";
+import { InferGetStaticPaths, StoreApiResponse } from "../../typs";
 
 const ProductIdPage = ({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) => {
-  const router = useRouter();
   if (!data) {
     return <div>cos poszło nie tak</div>;
   }
@@ -69,16 +63,3 @@ export const getStaticProps = async ({
     },
   };
 };
-
-export interface StoreApiResponse {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
