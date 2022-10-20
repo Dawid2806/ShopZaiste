@@ -20,7 +20,7 @@ export interface StoreApiResponse {
 export interface ProductsDetails {
   image?: string;
   price?: number;
-  id: number;
+  id: string | number;
   title?: string;
   description?: string;
   thumbailUrl?: string;

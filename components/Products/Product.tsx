@@ -1,5 +1,4 @@
 import { ProductsDetails } from "../../typs";
-import { Rating } from "./Rating";
 
 interface ProductDetailsProps {
   data: ProductsDetails;

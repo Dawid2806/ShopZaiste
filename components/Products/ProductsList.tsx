@@ -25,7 +25,7 @@ export const ProductListItem = ({ data, link }: ProductListItemProps) => {
         <div className="mt-4 flex justify-between">
           <div>
             <h3 className="text-sm text-gray-700">
-              <Link href={`${link}/${data.id}`}>
+              <Link href={`${link}${data.id}`}>
                 <a>
                   <span aria-hidden="true" className="absolute inset-0" />
                   {data.title}

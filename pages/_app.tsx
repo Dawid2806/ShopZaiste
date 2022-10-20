@@ -4,7 +4,6 @@ import { Header } from "../components/Header/Header";
 import { Footer } from "../components/Footer/Footer";
 import { QueryClientProvider } from "react-query";
 import { QueryClient } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
 
 const client = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
@@ -14,7 +13,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Header />
         <Component {...pageProps} />
         <Footer />
-        <ReactQueryDevtools />
       </QueryClientProvider>
     </>
   );

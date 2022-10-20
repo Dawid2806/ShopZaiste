@@ -1,11 +1,15 @@
 import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
-import { ProductDetails } from "../../components/Products/Product";
-import { InferGetStaticPaths, StoreApiResponse } from "../../typs";
+import { useRouter } from "next/router";
+import { ProductDetails } from "../../../components/Products/Product";
+import { InferGetStaticPaths, StoreApiResponse } from "../../../typs";
 
 const ProductIdPage = ({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) => {
+  const router = useRouter();
+  console.log(router.query.page);
+
   if (!data) {
     return <div>cos poszło nie tak</div>;
   }
@@ -16,7 +20,7 @@ const ProductIdPage = ({
       </Link>
       <ProductDetails
         data={{
-          id: data.id,
+          id: `${[data.id]}`,
           price: data.price,
           title: data.title,
           thumbailUrl: data.image,
@@ -31,7 +35,7 @@ const ProductIdPage = ({
 export default ProductIdPage;
 
 export const getStaticPaths = async () => {
-  const res = await fetch("https://fakestoreapi.com/products/");
+  const res = await fetch("https://naszsklep-api.vercel.app/api/products/");
   const data: StoreApiResponse[] = await res.json();
 
   return {
@@ -55,7 +59,7 @@ export const getStaticProps = async ({
     };
   }
   const res = await fetch(
-    `https://fakestoreapi.com/products/${params?.productId}`
+    `https://naszsklep-api.vercel.app/api/products/${params?.productId}`
   );
   const data: StoreApiResponse = await res.json();
   return {

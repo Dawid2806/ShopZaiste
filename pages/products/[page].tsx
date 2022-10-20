@@ -1,12 +1,31 @@
-import { InferGetServerSidePropsType } from "next";
+import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import { useRouter } from "next/router";
 import React from "react";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { ProductListItem } from "../../components/Products/ProductsList";
 
 import { StoreApiResponse } from "../../typs";
+
 const ProductsPage = ({
   data,
-}: InferGetServerSidePropsType<typeof getStaticProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
+  const currentPage = router.query.page;
+  const nextPageHandler = () => {
+    router.push(`?page=${Number(currentPage) + 1}`);
+  };
+  const prevPageHandler = () => {
+    router.push(`/page=${Number(currentPage) - 1}`);
+  };
+  if (
+    !currentPage ||
+    Array.isArray(currentPage) ||
+    Number(currentPage) > 10 ||
+    currentPage.length > 1
+  ) {
+    return <div>nie poprawny url</div>;
+  }
+
   return (
     <>
       <div className="bg-white">
@@ -38,18 +57,36 @@ const ProductsPage = ({
           </div>
         </div>
       </div>
-      {/* <Pagination
+      <Pagination
         currentPage={currentPage}
         nextPageHandler={nextPageHandler}
         prevPageHandler={prevPageHandler}
-      /> */}
+      />
     </>
   );
 };
 
-export const getStaticProps = async () => {
-  const res = await fetch("https://fakestoreapi.com/products/");
+export const getStaticPaths = async () => {
+  return {
+    paths: Array.from({ length: 10 }, (_, page) => ({
+      params: {
+        page: (page + 1).toString(),
+      },
+    })),
+    fallback: "blocking",
+  };
+};
+
+export const getStaticProps = async ({
+  params,
+}: GetStaticPropsContext<InferGetStaticPropsType<typeof getStaticPaths>>) => {
+  const offset = (params?.page - 1) * 25;
+  const res = await fetch(
+    `https://naszsklep-api.vercel.app/api/products?take=25&offset=${offset}`
+  );
   const data: StoreApiResponse[] = await res.json();
+  if (data instanceof Error) throw data;
+
   return {
     props: {
       data,
