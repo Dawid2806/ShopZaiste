@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ProductsDetails } from "../../typs";
 
 interface ProductDetailsProps {
@@ -19,9 +20,14 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
           <div className="grid gap-8 lg:grid-cols-4 lg:items-start">
             <div className="lg:col-span-3">
               <div className="relative mt-4">
-                <img
+                <Image
+                  layout="responsive"
+                  width={16}
+                  height={9}
+                  objectFit="contain"
                   alt={data.thumbailAlt}
-                  src={data.thumbailUrl}
+                  src={`${data.thumbailUrl}`}
+                  quality="100"
                   className="h-72 w-full rounded-xl object-cover lg:h-[540px]"
                 />
 
@@ -44,40 +50,6 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
                   <span className="ml-1.5 text-xs"> Hover to zoom </span>
                 </div>
               </div>
-
-              <ul className="mt-1 flex gap-1">
-                <li>
-                  <img
-                    alt={data.thumbailAlt}
-                    src={data.thumbailUrl}
-                    className="h-16 w-16 rounded-md object-cover"
-                  />
-                </li>
-
-                <li>
-                  <img
-                    alt={data.thumbailAlt}
-                    src={data.thumbailUrl}
-                    className="h-16 w-16 rounded-md object-cover"
-                  />
-                </li>
-
-                <li>
-                  <img
-                    alt={data.thumbailAlt}
-                    src={data.thumbailUrl}
-                    className="h-16 w-16 rounded-md object-cover"
-                  />
-                </li>
-
-                <li>
-                  <img
-                    alt={data.thumbailAlt}
-                    src={data.thumbailUrl}
-                    className="h-16 w-16 rounded-md object-cover"
-                  />
-                </li>
-              </ul>
             </div>
 
             <div className="lg:sticky lg:top-0">

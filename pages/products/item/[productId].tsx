@@ -8,7 +8,6 @@ const ProductIdPage = ({
   data,
 }: InferGetServerSidePropsType<typeof getStaticProps>) => {
   const router = useRouter();
-  console.log(router.query.page);
 
   if (!data) {
     return <div>cos poszło nie tak</div>;
