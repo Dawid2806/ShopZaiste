@@ -42,7 +42,12 @@ const ProductsCSRPage: React.FC = () => {
   if (!data || isError) {
     return <div>brak danych</div>;
   }
-  if (!currentPage || Array.isArray(currentPage)) {
+  if (
+    !currentPage ||
+    Array.isArray(currentPage) ||
+    Number(currentPage) > 10 ||
+    Number(currentPage) < 1
+  ) {
     return <div>nie poprawny url</div>;
   }
   return (
@@ -62,7 +67,7 @@ const ProductsCSRPage: React.FC = () => {
                 >
                   <ProductListItem
                     data={{
-                      id: product.id,
+                      id: `/${product.id}`,
                       price: product.price,
                       title: product.title,
                       thumbailUrl: product.image,
