@@ -17,7 +17,6 @@ const ProductsPage = ({
   const prevPageHandler = () => {
     router.push(`/page=${Number(currentPage) - 1}`);
   };
-  console.log(typeof currentPage);
   if (
     !currentPage ||
     Array.isArray(currentPage) ||
