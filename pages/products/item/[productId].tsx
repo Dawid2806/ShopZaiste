@@ -15,12 +15,12 @@ const ProductIdPage = ({
   }
   return (
     <>
-      <Link href={"/products"}>
+      <Link href={"/products/1"}>
         <a>wroc na strone z produktami</a>
       </Link>
       <ProductDetails
         data={{
-          id: `${[data.id]}`,
+          id: `${data.id}`,
           price: data.price,
           title: data.title,
           thumbailUrl: data.image,
@@ -42,7 +42,7 @@ export const getStaticPaths = async () => {
     paths: data.map((product) => {
       return {
         params: {
-          productId: product.id.toString(),
+          productId: `${product.id}`,
         },
       };
     }),

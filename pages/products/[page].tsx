@@ -4,7 +4,7 @@ import React from "react";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { ProductListItem } from "../../components/Products/ProductsList";
 
-import { StoreApiResponse } from "../../typs";
+import { InferGetStaticPaths, StoreApiResponse } from "../../typs";
 
 const ProductsPage = ({
   data,
@@ -17,15 +17,15 @@ const ProductsPage = ({
   const prevPageHandler = () => {
     router.push(`/page=${Number(currentPage) - 1}`);
   };
+  console.log(typeof currentPage);
   if (
     !currentPage ||
     Array.isArray(currentPage) ||
     Number(currentPage) > 10 ||
-    currentPage.length > 1
+    Number(currentPage) < 1
   ) {
     return <div>nie poprawny url</div>;
   }
-
   return (
     <>
       <div className="bg-white">
@@ -43,7 +43,7 @@ const ProductsPage = ({
                 >
                   <ProductListItem
                     data={{
-                      id: product.id,
+                      id: `/item/${product.id}`,
                       price: product.price,
                       title: product.title,
                       thumbailUrl: product.image,
@@ -79,8 +79,9 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({
   params,
-}: GetStaticPropsContext<InferGetStaticPropsType<typeof getStaticPaths>>) => {
-  const offset = (params?.page - 1) * 25;
+}: InferGetStaticPaths<typeof getStaticPaths>) => {
+  const offset = params?.page;
+
   const res = await fetch(
     `https://naszsklep-api.vercel.app/api/products?take=25&offset=${offset}`
   );
