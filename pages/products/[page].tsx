@@ -12,10 +12,10 @@ const ProductsPage = ({
   const router = useRouter();
   const currentPage = router.query.page;
   const nextPageHandler = () => {
-    router.push(`?page=${Number(currentPage) + 1}`);
+    router.push(`${Number(currentPage) + 1}`);
   };
   const prevPageHandler = () => {
-    router.push(`/page=${Number(currentPage) - 1}`);
+    router.push(`${Number(currentPage) - 1}`);
   };
   if (
     !currentPage ||
