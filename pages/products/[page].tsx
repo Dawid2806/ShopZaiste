@@ -25,6 +25,8 @@ const ProductsPage = ({
   ) {
     return <div>nie poprawny url</div>;
   }
+
+  console.log(data);
   return (
     <>
       <div className="bg-white">
@@ -79,7 +81,11 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async ({
   params,
 }: InferGetStaticPaths<typeof getStaticPaths>) => {
-  const offset = params?.page;
+  const page = params?.page;
+
+  const offset = Number(
+    page === undefined ? 0 : String((Number(page) - 1) * 25)
+  );
 
   const res = await fetch(
     `https://naszsklep-api.vercel.app/api/products?take=25&offset=${offset}`
