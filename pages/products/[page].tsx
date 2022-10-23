@@ -26,7 +26,6 @@ const ProductsPage = ({
     return <div>nie poprawny url</div>;
   }
 
-  console.log(data);
   return (
     <>
       <div className="bg-white">
