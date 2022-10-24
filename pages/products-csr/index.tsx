@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { ProductListItem } from "../../components/Products/ProductsList";
 import { Pagination } from "../../components/Pagination/Pagination";
 import { StoreApiResponse } from "../../typs";
+import { Loading } from "../../components/Loading/Loading";
 
 const getProducts = async (setNum: string) => {
   if (setNum === undefined) return;
@@ -37,7 +38,7 @@ const ProductsCSRPage: React.FC = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (!data || isError) {
     return <div>brak danych</div>;
