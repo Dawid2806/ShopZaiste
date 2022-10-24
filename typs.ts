@@ -9,6 +9,7 @@ export interface StoreApiResponse {
   title: string;
   price: number;
   description: string;
+  longDescription: string;
   category: string;
   image: string;
   rating: {
@@ -26,4 +27,5 @@ export interface ProductsDetails {
   thumbailUrl?: string;
   thumbailAlt?: string;
   rating?: number;
+  longDescription: string;
 }
