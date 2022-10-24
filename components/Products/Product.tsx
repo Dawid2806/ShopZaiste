@@ -1,5 +1,8 @@
 import Image from "next/image";
 import { ProductsDetails } from "../../typs";
+import { NextSeo } from "next-seo";
+
+import ReactMarkdown from "react-markdown";
 
 interface ProductDetailsProps {
   data: ProductsDetails;
@@ -9,6 +12,25 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
   const rating = data.rating as number;
   return (
     <>
+      <NextSeo
+        title={data.title}
+        description={data.description}
+        canonical={`https://naszsklep-api.vercel.app/api/products/${data.id}`}
+        openGraph={{
+          url: `https://naszsklep-api.vercel.app/api/products/${data.id}`,
+          title: data.title,
+          description: data.description,
+          images: [
+            {
+              url: `${data.thumbailUrl}`,
+
+              alt: data.thumbailAlt,
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "Nasz sklep",
+        }}
+      />
       <section>
         <div className="relative mx-auto max-w-screen-xl px-4 py-8">
           <div>
@@ -84,11 +106,9 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
             <div className="lg:col-span-3">
               <div className="prose max-w-none [&>iframe]:mt-6 [&>iframe]:aspect-video [&>iframe]:w-full [&>iframe]:rounded-xl mb-10">
                 <p>{data.description}</p>
-
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-                  eveniet ipsam mollitia nesciunt illo! Suscipit, corrupti!
-                </p>
+                <article className="prose lg:prose-xl ">
+                  <ReactMarkdown>{data.longDescription}</ReactMarkdown>
+                </article>
               </div>
             </div>
           </div>
