@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
+import { BackButton } from "../../components/BackButton/BackButton";
+import { Loading } from "../../components/Loading/Loading";
 import { ProductDetails } from "../../components/Products/Product";
 import { StoreApiResponse } from "../../typs";
 
@@ -32,16 +34,16 @@ const ProductIdPage = () => {
     return <div>Niema takiego produktu</div>;
   }
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   if (!data || isError) {
     return <div>cos poszło nie tak</div>;
   }
+  console.log(data);
   return (
     <>
-      <Link href={"/products-csr?page=1"}>
-        <a>wroc na strone z produktami</a>
-      </Link>
+      <BackButton link="/products-csr?page=1" />
+
       <ProductDetails
         data={{
           id: data.id,
@@ -51,6 +53,7 @@ const ProductIdPage = () => {
           thumbailAlt: data.title,
           description: data.description,
           rating: data.rating.rate,
+          longDescription: data.longDescription,
         }}
       />
     </>

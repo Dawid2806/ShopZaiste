@@ -1,6 +1,7 @@
 import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { BackButton } from "../../../components/BackButton/BackButton";
 import { ProductDetails } from "../../../components/Products/Product";
 import { InferGetStaticPaths, StoreApiResponse } from "../../../typs";
 
@@ -14,9 +15,8 @@ const ProductIdPage = ({
   }
   return (
     <>
-      <Link href={"/products/1"}>
-        <a>wroc na strone z produktami</a>
-      </Link>
+      <BackButton link="/products/1" />
+
       <ProductDetails
         data={{
           id: `${data.id}`,
@@ -25,6 +25,7 @@ const ProductIdPage = ({
           thumbailUrl: data.image,
           thumbailAlt: data.title,
           description: data.description,
+          longDescription: data.longDescription,
           rating: data.rating.rate,
         }}
       />
