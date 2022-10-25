@@ -11,6 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <DefaultSeo {...SEO} />
+
       <QueryClientProvider client={client}>
         <Component {...pageProps} />
       </QueryClientProvider>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useQuery } from "react-query";
@@ -21,19 +20,19 @@ const ProductIdPage = () => {
   const router = useRouter();
   const productId = router.query.productsId;
   const currentProductId = String(productId);
-  const { data, isLoading, isError } = useQuery(
+  const { data, isLoading, isError, isFetching } = useQuery(
     "products-csr",
     () => {
       return getProducts(currentProductId);
     },
     {
-      cacheTime: 2000,
+      cacheTime: 1,
     }
   );
   if (!currentProductId === undefined || Array.isArray(currentProductId)) {
     return <div>Niema takiego produktu</div>;
   }
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return <Loading />;
   }
   if (!data || isError) {
@@ -43,7 +42,6 @@ const ProductIdPage = () => {
   return (
     <>
       <BackButton link="/products-csr?page=1" />
-
       <ProductDetails
         data={{
           id: data.id,
@@ -54,6 +52,7 @@ const ProductIdPage = () => {
           description: data.description,
           rating: data.rating.rate,
           longDescription: data.longDescription,
+          currentUrl: "/products-csr/",
         }}
       />
     </>

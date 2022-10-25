@@ -1,5 +1,4 @@
 import { InferGetServerSidePropsType } from "next";
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { BackButton } from "../../../components/BackButton/BackButton";
 import { ProductDetails } from "../../../components/Products/Product";
@@ -27,6 +26,7 @@ const ProductIdPage = ({
           description: data.description,
           longDescription: data.longDescription,
           rating: data.rating.rate,
+          currentUrl: "/products/item/",
         }}
       />
     </>
@@ -62,9 +62,19 @@ export const getStaticProps = async ({
     `https://naszsklep-api.vercel.app/api/products/${params?.productId}`
   );
   const data: StoreApiResponse = await res.json();
+
+  if (!data) {
+    return {
+      props: {},
+      notFound: true,
+    };
+  }
+
   return {
     props: {
-      data,
+      data: {
+        ...data,
+      },
     },
   };
 };

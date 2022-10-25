@@ -3,6 +3,8 @@ import { ProductsDetails } from "../../typs";
 import { NextSeo } from "next-seo";
 
 import ReactMarkdown from "react-markdown";
+import Link from "next/link";
+import { ZaisteReactMarkDown } from "./ZaisteReactMarkDown";
 
 interface ProductDetailsProps {
   data: ProductsDetails;
@@ -10,6 +12,7 @@ interface ProductDetailsProps {
 
 export const ProductDetails = ({ data }: ProductDetailsProps) => {
   const rating = data.rating as number;
+
   return (
     <>
       <NextSeo
@@ -107,7 +110,22 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
               <div className="prose max-w-none [&>iframe]:mt-6 [&>iframe]:aspect-video [&>iframe]:w-full [&>iframe]:rounded-xl mb-10">
                 <p>{data.description}</p>
                 <article className="prose lg:prose-xl ">
-                  <ReactMarkdown>{data.longDescription}</ReactMarkdown>
+                  <ZaisteReactMarkDown>
+                    {`[link do następnego produktu ${String(
+                      Number(data.id) + 1
+                    )}](${data.currentUrl}${String(Number(data.id) + 1)})`}
+                  </ZaisteReactMarkDown>
+                  {data.id > 1 && (
+                    <ZaisteReactMarkDown>
+                      {`[link do poprzedniego produktu ${String(
+                        Number(data.id) - 1
+                      )}](${data.currentUrl}${String(Number(data.id) - 1)})`}
+                    </ZaisteReactMarkDown>
+                  )}
+
+                  <ZaisteReactMarkDown>
+                    {data.longDescription}
+                  </ZaisteReactMarkDown>
                 </article>
               </div>
             </div>
