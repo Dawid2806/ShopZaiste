@@ -37,10 +37,7 @@ const ProductsPage = ({
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {data.map((product) => {
               return (
-                <div
-                  key={product.id}
-                  className="shadow-xl border-2 p-4 m-4 cursor-pointer "
-                >
+                <div key={product.id} className="shadow-xl border-2 p-4 m-4 ">
                   <ProductListItem
                     data={{
                       id: `/item/${product.id}`,

@@ -22,9 +22,9 @@ export interface StoreApiResponse {
 
 export interface ProductsDetails {
   image?: string;
-  price?: number;
+  price: number;
   id: string | number;
-  title?: string;
+  title: string;
   description?: string;
   thumbailUrl?: string;
   thumbailAlt?: string;
