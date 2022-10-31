@@ -24,36 +24,45 @@ export const CartStateContextProvider = ({
 }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
+  const updateCart = (item: CartItem) => {
+    addItemToCart(item);
+    addCartItemToLocalStorage(item);
+  };
+
+  const addItemToCart = (item: CartItem) => {
+    setCartItems((prevState) => {
+      const existingItem = prevState.find(
+        (existingItem) => existingItem.id === item.id
+      );
+      if (!existingItem) {
+        return [...prevState, item];
+      }
+      return prevState.map((existingItem) => {
+        if (existingItem.id === item.id) {
+          return {
+            ...existingItem,
+            count: existingItem.count + 1,
+          };
+        }
+        return existingItem;
+      });
+    });
+  };
+
+  const addCartItemToLocalStorage = (item: CartItem) => {
+    const cart = getCartItemsFromLocalStorage();
+    setCartFromLocalStorage([...cart, item]);
+  };
+
   useEffect(() => {
     setCartItems(getCartItemsFromLocalStorage());
   }, []);
-  useEffect(() => {
-    setCartFromLocalStorage(cartItems);
-  }, [cartItems]);
 
   return (
     <cartStateContext.Provider
       value={{
         items: cartItems,
-        addItemToCart: (item) => {
-          setCartItems((prevState) => {
-            const existingItem = prevState.find(
-              (existingItem) => existingItem.id === item.id
-            );
-            if (!existingItem) {
-              return [...prevState, item];
-            }
-            return prevState.map((existingItem) => {
-              if (existingItem.id === item.id) {
-                return {
-                  ...existingItem,
-                  count: existingItem.count + 1,
-                };
-              }
-              return existingItem;
-            });
-          });
-        },
+        addItemToCart: updateCart,
         removeItemFromCart: (id) => {
           setCartItems((prevState) => {
             const exisitingItem = prevState.find((elItem) => {

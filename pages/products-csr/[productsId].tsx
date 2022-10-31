@@ -21,7 +21,7 @@ const ProductIdPage = () => {
   const productId = router.query.productsId;
   const currentProductId = String(productId);
   const { data, isLoading, isError, isFetching } = useQuery(
-    "products-csr",
+    ["products-csr", currentProductId],
     () => {
       return getProducts(currentProductId);
     },

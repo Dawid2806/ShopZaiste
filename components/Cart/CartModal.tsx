@@ -1,6 +1,6 @@
 import { CartItem } from "./CartContext";
 
-export const getCartItemsFromLocalStorage = () => {
+export const getCartItemsFromLocalStorage = (): CartItem[] => {
   const itemFromLocalStorage = localStorage.getItem("ZAISTE_SHOPPING_CART");
   if (!itemFromLocalStorage) {
     return [];
