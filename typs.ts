@@ -26,9 +26,13 @@ export interface ProductsDetails {
   id: string | number;
   title: string;
   description?: string;
-  thumbailUrl?: string;
+  thumbailUrl?: string | Image[];
   thumbailAlt?: string;
   rating?: number;
   longDescription: string;
-  currentUrl: string;
+  currentUrl?: string;
+}
+
+export interface Image {
+  url: string;
 }

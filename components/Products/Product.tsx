@@ -5,6 +5,7 @@ import { NextSeo } from "next-seo";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import { ZaisteReactMarkDown } from "./ZaisteReactMarkDown";
+import { useCartState } from "../../hooks/useContext";
 
 interface ProductDetailsProps {
   data: ProductsDetails;
@@ -12,6 +13,7 @@ interface ProductDetailsProps {
 
 export const ProductDetails = ({ data }: ProductDetailsProps) => {
   const rating = data.rating as number;
+  const cartState = useCartState();
 
   return (
     <>
@@ -98,7 +100,15 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
                 </div>
 
                 <button
-                  type="submit"
+                  type="button"
+                  onClick={() => {
+                    cartState.addItemToCart({
+                      id: String(data.id),
+                      price: data.price,
+                      title: data.title,
+                      count: 1,
+                    });
+                  }}
                   className="w-full rounded bg-red-700 px-6 py-3 text-sm font-bold uppercase tracking-wide text-white"
                 >
                   Add to cart
@@ -110,19 +120,24 @@ export const ProductDetails = ({ data }: ProductDetailsProps) => {
               <div className="prose max-w-none [&>iframe]:mt-6 [&>iframe]:aspect-video [&>iframe]:w-full [&>iframe]:rounded-xl mb-10">
                 <p>{data.description}</p>
                 <article className="prose lg:prose-xl ">
-                  <ZaisteReactMarkDown>
-                    {`[link do następnego produktu ${String(
-                      Number(data.id) + 1
-                    )}](${data.currentUrl}${String(Number(data.id) + 1)})`}
-                  </ZaisteReactMarkDown>
-                  {data.id > 1 && (
-                    <ZaisteReactMarkDown>
-                      {`[link do poprzedniego produktu ${String(
-                        Number(data.id) - 1
-                      )}](${data.currentUrl}${String(Number(data.id) - 1)})`}
-                    </ZaisteReactMarkDown>
-                  )}
-
+                  {data.currentUrl ? (
+                    <>
+                      <ZaisteReactMarkDown>
+                        {`[link do następnego produktu ${String(
+                          Number(data.id) + 1
+                        )}](${data.currentUrl}${String(Number(data.id) + 1)})`}
+                      </ZaisteReactMarkDown>
+                      {data.id > 1 && (
+                        <ZaisteReactMarkDown>
+                          {`[link do poprzedniego produktu ${String(
+                            Number(data.id) - 1
+                          )}](${data.currentUrl}${String(
+                            Number(data.id) - 1
+                          )})`}
+                        </ZaisteReactMarkDown>
+                      )}
+                    </>
+                  ) : null}
                   <ZaisteReactMarkDown>
                     {data.longDescription}
                   </ZaisteReactMarkDown>

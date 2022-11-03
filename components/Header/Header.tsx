@@ -20,6 +20,9 @@ export const Header = () => {
           <Link href={"/products-csr?page=1"}>
             <li className="cursor-pointer">Products-csr</li>
           </Link>
+          <Link href={"/products-graphql"}>
+            <li className="cursor-pointer">Products-GraphQL</li>
+          </Link>
         </ul>
         <Link href={"/cart"}>
           <div className=" cursor-pointer mr-10 ">
